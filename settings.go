@@ -39,6 +39,7 @@ type ResolvSettings struct {
 	SetEDNS0       bool
 	ServerListFile string `toml:"server-list-file"`
 	ResolvFile     string `toml:"resolv-file"`
+	TryAllServers  bool   `toml:"try-all-servers"`
 }
 
 type DNSServerSettings struct {

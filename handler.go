@@ -66,9 +66,10 @@ func NewHandler() *GODNSHandler {
 		negCache = NewRedisCache(
 			settings.Redis,
 			int64(cacheConfig.Expire/2))
-	default:
-		logger.Error("Invalid cache backend %s", cacheConfig.Backend)
-		panic("Invalid cache backend")
+	case "none":
+		cache = NewNoneCache()
+		negCache = NewNoneCache()
+		logger.Warn("Invalid cache backend %s... using No cache", cacheConfig.Backend)
 	}
 
 	var hosts Hosts

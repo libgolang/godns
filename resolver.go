@@ -157,7 +157,12 @@ func (r *Resolver) Lookup(net string, req *dns.Msg) (message *dns.Msg, err error
 		// would make no sense. See more about #20
 		if r != nil && r.Rcode != dns.RcodeSuccess {
 			logger.Warn("%s failed to get an valid answer on %s", qname, nameserver)
-			if r.Rcode == dns.RcodeServerFailure {
+			if r.Rcode == dns.RcodeServerFailure || r.Rcode == dns.RcodeNameError {
+				return
+			}
+
+			//
+			if settings.ResolvConfig.TryAllServers &&  r.Rcode == dns.RcodeNameError {
 				return
 			}
 		}

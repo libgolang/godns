@@ -272,3 +272,29 @@ func (*JsonSerializer) Loads(data []byte) (*dns.Msg, error) {
 	err := json.Unmarshal(data, &mesg)
 	return &mesg, err
 }
+
+
+type NoneCache struct {
+}
+
+func NewNoneCache() *NoneCache {
+	return &NoneCache{}
+}
+
+func (nc*NoneCache) Get(key string) (Msg *dns.Msg, err error) {
+	var msg dns.Msg
+	err = KeyNotFound{key}
+	return &msg, err
+}
+func (nc*NoneCache) Set(key string, Msg *dns.Msg) error {
+	return nil
+}
+func (nc*NoneCache) Exists(key string) bool {
+	return false;
+}
+func (nc*NoneCache) Remove(key string) error {
+	return nil
+}
+func (nc*NoneCache) Full() bool {
+	return false
+}
